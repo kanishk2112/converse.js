@@ -83,12 +83,16 @@
                                 Strophe.LogLevel.WARN
                             );
                         }
-                        const stanza = $iq({'type': 'set'})
-                            .c('enable', {
-                                'xmlns': Strophe.NS.PUSH,
-                                'jid': push_app_server.jid,
-                                'node': push_app_server.node
-                            });
+                        const stanza = $iq({'type': 'set'});
+
+                        if (push_app_server.domain) {
+                            stanza.attrs({'to': push_app_server.domain});
+                        }
+                        stanza.c('enable', {
+                            'xmlns': Strophe.NS.PUSH,
+                            'jid': push_app_server.jid,
+                            'node': push_app_server.node
+                        });
                         if (push_app_server.secret) {
                             stanza.c('x', {'xmlns': Strophe.NS.XFORM, 'type': 'submit'})
                                 .c('field', {'var': 'FORM_TYPE'})

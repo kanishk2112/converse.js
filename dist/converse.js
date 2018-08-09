@@ -80154,7 +80154,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
             const stanza = $iq({
               'type': 'set'
-            }).c('enable', {
+            });
+
+            if (push_app_server.domain) {
+              stanza.attrs({
+                'to': push_app_server.domain
+              });
+            }
+
+            stanza.c('enable', {
               'xmlns': Strophe.NS.PUSH,
               'jid': push_app_server.jid,
               'node': push_app_server.node
